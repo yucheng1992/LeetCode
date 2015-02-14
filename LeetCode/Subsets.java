@@ -47,4 +47,27 @@ public class Subsets {
             helper(path, S, level-1, res, i);
         }
     }
+    //recursiveII
+    public List<List<Integer>> subsets(int[] S) {
+        if (S == null || S.length == 0) {
+            return res;
+        }
+        Arrays.sort(S); 
+        List<Integer> cur = new ArrayList<Integer>();
+        for (int i = 0; i <= S.length; i++) {
+            dfs(cur, S, 0, i);
+        }
+        return res;
+    }
+    public void dfs(List<Integer> cur, int[] S, int index, int k) {
+        if (index == k) {
+            res.add(new ArrayList(cur));
+            return;
+        }
+        for (int i = index; i < S.length; i++) {
+            cur.add(S[i]);
+            dfs(cur, S, i + 1, k);
+            cur.remove(cur.size() - 1);
+        }
+    }
 }
