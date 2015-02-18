@@ -1,3 +1,6 @@
+import java.util.*;
+
+
 public class NQueens {
     public List<String[]> solveNQueens(int n) {
         List<String[]> res = new ArrayList<String[]>();
@@ -53,4 +56,57 @@ public class NQueens {
         }
         return true;
     }
+
+    // A new version of DFS
+    List<String[]> res = new ArrayList<String[]>();
+    public List<String[]> solveNQueens2(int n) {
+        char[][] board = new char[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                board[i][j] = '.';
+            }
+        }
+        String[] cur = new String[n];
+        dfs2(board, 0, n, cur);
+        return res;
+    }
+    
+    public void dfs2(char[][] board, int row, int n, String[] cur) {
+        if (row >= n) {
+            String[] newCur = new String[n];
+            for (int j = 0; j < n; j++) {
+                newCur[j] = cur[j];
+            }
+            res.add(newCur);
+            return;
+        }
+        for (int i = 0; i < n; i++) {
+            board[row][i] = 'Q';
+            if (isValid2(board, row, i)) {
+                cur[row] = String.valueOf(board[row]);
+                dfs2(board, row + 1, n, cur);
+            }
+            board[row][i] = '.';
+        }
+    }
+    
+    public boolean isValid2(char[][] board, int row, int col) {
+        for (int i = 0; i < row; i++) {
+            if (board[i][col] == 'Q') {
+                return false;
+            }
+        }
+        for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
+            if (board[i][j] == 'Q') {
+                return false;
+            }
+        }
+        for (int i = row - 1, j = col + 1; i >= 0 && j < board[0].length; i--, j++) {
+            if (board[i][j] == 'Q') {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }
