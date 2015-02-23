@@ -1,4 +1,6 @@
-public class 4Sum {
+import java.util.*;
+
+public class FourSum {
     public List<List<Integer>> fourSum(int[] num, int target) {
         List<List<Integer>> res = new ArrayList<List<Integer>>();
         if (num == null || num.length < 4) {

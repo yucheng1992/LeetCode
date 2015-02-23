@@ -1,4 +1,6 @@
-public class 3Sum {
+import java.util.*;
+
+public class ThreeSum {
     public List<List<Integer>> threeSum(int[] num) {
         List<List<Integer>> res = new ArrayList<List<Integer>>();
         if (num == null || num.length < 3) {
