@@ -22,7 +22,7 @@ public class ReadSumOfDigits {
         return res.toString();
     }
     
-    public static String changeInt(int x) {
+    public String changeInt(int x) {
         switch (x) {
             case 0:
                 return "zero";
