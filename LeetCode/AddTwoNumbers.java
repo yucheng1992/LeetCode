@@ -11,35 +11,26 @@
  */
 public class AddTwoNumbers {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        int carry = 0;
         ListNode dummy = new ListNode(0);
         ListNode prev = dummy;
-        int add = 0;
         while (l1 != null || l2 != null) {
-            if (l1 != null && l2 != null) {
-                int sum = l1.val + l2.val + add;
-                add = sum / 10;
-                ListNode node = new ListNode(sum - 10 * add);
-                prev.next = node;
-                prev = prev.next;
+            int value = 0;
+            if (l1 != null) {
+                value += l1.val;
                 l1 = l1.next;
-                l2 = l2.next;
-            } else if (l1 != null) {
-                int sum = l1.val + add;
-                add = sum / 10;
-                ListNode node = new ListNode(sum - 10 * add);
-                prev.next = node;
-                prev = prev.next;
-                l1 = l1.next;
-            } else {
-                int sum = l2.val + add;
-                add = sum / 10;
-                ListNode node = new ListNode(sum - 10 * add);
-                prev.next = node;
-                prev = prev.next;
+            }
+            if (l2 != null) {
+                value += l2.val;
                 l2 = l2.next;
             }
+            value += carry;
+            carry = value / 10;
+            ListNode node = new ListNode(value % 10);
+            prev.next = node;
+            prev = prev.next;
         }
-        if (add == 1) {
+        if (carry == 1) {
             ListNode node = new ListNode(1);
             prev.next = node;
         }
