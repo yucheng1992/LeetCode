@@ -47,4 +47,38 @@ public class MergeKSortedLists {
         }
         return dummy.next;
     }
+    
+
+    //priority queue
+    public ListNode mergeKLists2(List<ListNode> lists) {
+        int k = lists.size();
+        ListNode dummy = new ListNode(0);
+        ListNode pre = dummy;
+        PriorityQueue<ListNode> pq = new PriorityQueue<ListNode>(k + 1, new Comparator<ListNode>() {
+            @Override
+            public int compare(ListNode listNode, ListNode t1) {
+                if (listNode.val < t1.val) {
+                    return -1;
+                } else if (listNode.val == t1.val) {
+                    return 0;
+                } else {
+                    return 1;
+                }
+            }
+        });
+        for (ListNode node : lists) {
+            if (node != null) {
+                pq.add(node);
+            }
+        }   
+        while (pq.size() > 0) {
+            ListNode temp = pq.poll();
+            pre.next = temp;
+            if (temp.next != null) {
+                pq.add(temp.next);
+            }
+            pre = pre.next;
+        }
+        return dummy.next;
+    }
 }
