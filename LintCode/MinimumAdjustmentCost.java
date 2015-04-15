@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class MinimumAdjustmentCost {
     /**
      * @param A: An integer array.
