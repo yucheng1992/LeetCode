@@ -18,14 +18,15 @@ public class Solution {
         if (cur.next == null) {
             return head;
         }
+        cur = cur.next;
+        pre = pre.next;
         while (cur != null) {
             ListNode next = cur.next;
+            cur.next = dummy.next;
             dummy.next = cur;
-            cur.next = pre;
             pre.next = next;
-            pre = cur;
             cur = next;
         }
         return dummy.next;
-    }
+    }   
 }
