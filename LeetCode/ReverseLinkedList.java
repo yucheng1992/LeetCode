@@ -15,9 +15,6 @@ public class Solution {
         dummy.next = head;
         ListNode pre = dummy;
         ListNode cur = dummy.next;
-        if (cur.next == null) {
-            return head;
-        }
         cur = cur.next;
         pre = pre.next;
         while (cur != null) {
