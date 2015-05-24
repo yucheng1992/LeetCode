@@ -1,7 +1,4 @@
-import java.util.*;
-
-
-public class CombinationSum2 {
+public class CombinationSumII {
     List<List<Integer>> res = new ArrayList<List<Integer>>();
     public List<List<Integer>> combinationSum2(int[] num, int target) {
         Arrays.sort(num);
