@@ -15,7 +15,7 @@ public class PermutationsII {
             res.add(cur);
             return;
         }
-        for (int i=level; i<num.length; i++) {
+        for (int i = level; i < num.length; i++) {
             //use duplicate to judge whether there are duplicates in the list
             boolean duplicate = false;
             for (int j = level; j < i; j++) {
@@ -38,5 +38,5 @@ public class PermutationsII {
         int temp = num[a];
         num[a] = num[b];
         num[b] = temp;
-    }            
+    }
 }
