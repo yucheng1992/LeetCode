@@ -26,7 +26,7 @@ public class FlattenTwoDVector {
         while (x < vec2d.size() && (vec2d.get(x) == null || vec2d.get(x).isEmpty())) {
             x++;
         }
-        return x < vec2d.size() && vec2d != null && !vec2d.get(x).isEmpty();
+        return x < vec2d.size();
     }
 }
 
