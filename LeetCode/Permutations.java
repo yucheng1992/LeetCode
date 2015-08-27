@@ -1,30 +1,28 @@
 public class Permutations {
-    List<List<Integer>> res = new ArrayList<List<Integer>>();
-    public List<List<Integer>> permute(int[] num) {
-        if (num == null || num.length == 0) {
-            return res;
-        }
-        List<Integer> cur = new ArrayList<Integer>();
-        dfs(cur, 0, num);
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> res = new LinkedList<List<Integer>>();
+        List<Integer> cur = new LinkedList<Integer>();
+        helper(res, cur, 0, nums);
         return res;
     }
-    public void dfs(List<Integer> cur, int level, int[] num) {
-        if (level >= num.length) {
-            res.add(cur);
+    
+    private void helper(List<List<Integer>> res, List<Integer> cur, int index, int[] nums) {
+        if (index == nums.length) {
+            res.add(new LinkedList<Integer>(cur));
             return;
         }
-        for (int i = level; i < num.length; i++) {
-            List<Integer> path = new ArrayList<Integer>();
-            swap(num, i, level);
-            path.addAll(cur);
-            path.add(num[level]);
-            dfs(path, level+1, num);
-            swap(num, i, level);
+        for (int i = index; i < nums.length; i++) {
+            swap(nums, i, index);
+            cur.add(nums[index]);
+            helper(res, cur, index + 1, nums);
+            cur.remove(cur.size() - 1);
+            swap(nums, i, index);
         }
-    } 
-    public void swap(int[] num, int i, int j) {
-        int temp = num[i];
-        num[i] = num[j];
-        num[j] = temp;
+    }
+    
+    private void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
     }
 }
