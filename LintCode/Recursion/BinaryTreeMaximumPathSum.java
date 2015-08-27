@@ -10,26 +10,24 @@
  * }
  */
 public class BinaryTreeMaximumPathSum {
-    
-    private int max = Integer.MIN_VALUE; 
-    
     /**
      * @param root: The root of binary tree.
      * @return: An integer.
      */
     public int maxPathSum(TreeNode root) {
         // write your code here
-        helper(root);
-        return max;
+        int[] res = new int[]{Integer.MIN_VALUE};
+        helper(root, res);
+        return res[0];
     }
     
-    public int helper(TreeNode root) {
+    public int helper(TreeNode root, int[] res) {
         if (root == null) {
             return 0;
         }
         int left = Math.max(0, helper(root.left));
         int right = Math.max(0, helper(root.right));
-        max = Math.max(max, left + right + root.val);
+        res[0] = Math.max(max, left + right + root.val);
         return Math.max(left, right) + root.val;
     }
 }
