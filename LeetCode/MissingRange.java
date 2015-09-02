@@ -1,44 +1,32 @@
-import java.util.*;
-
-
-public class MissingRange {
-    public List<String> findMissingRanges(int[] vals, int start, int end) {
+public class MissingRanges {
+    public List<String> findMissingRanges(int[] nums, int lower, int upper) {
         List<String> res = new LinkedList<String>();
-        if (vals.length == 0 || vals == null) {
-            StringBuilder str = new StringBuilder();
-            str.append(start + "->" + end);
-            res.add(str.toString());
+        if (nums == null || nums.length == 0) {
+            res.add(outputRange(lower, upper));
             return res;
         }
-        int pre = start;
-        for (int i = 0; i < vals.length; i++) {
-            StringBuilder str = new StringBuilder();
-            int cur = vals[i] - 1;
-            if (cur == pre) {
-                str.append(cur);
-                res.add(str.toString());
-            } else if (cur > pre) {
-                if (cur <= end) {
-                    str.append(pre + "->" + cur);
-                    res.add(str.toString());
-                } else {
-                    str.append(pre + "->" + end);
-                    res.add(str.toString());
-                    return res;
-                }
-            }
-            pre = Math.max(pre, vals[i] + 1);
-            if (pre > end) {
-                break;
-            }
+        int prev = lower;
+        if (nums[0] > lower) {
+            res.add(outputRange(lower, nums[0] - 1));
+            prev = nums[0];
         }
-        if (pre == end) {
-            res.add(Integer.toString(end));
-        } else if (pre < end) {
-            StringBuilder str = new StringBuilder();
-            str.append(pre + "->" + end);
-            res.add(str.toString());
+        for (int num: nums) {
+            if (num - prev > 1) {
+                res.add(outputRange(prev + 1, num - 1));
+            }
+            prev = num;
+        }
+        if (upper - prev > 0) {
+            res.add(outputRange(prev + 1, upper));
         }
         return res;
+    }
+    
+    private String outputRange(int lower, int upper) {
+        if (lower == upper) {
+            return String.valueOf(lower);
+        } else {
+            return (lower + "->" + upper);
+        }
     }
 }
