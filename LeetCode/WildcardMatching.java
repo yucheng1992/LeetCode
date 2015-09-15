@@ -1,28 +1,47 @@
 public class WildcardMatching {
     public boolean isMatch(String s, String p) {
-        if (p.length() == 0) {
-            return s.length() == 0;
+        if (s.length() == 0 && p.length() == 0) {
+            return true;
         }
-        if(s.length() > 300 && p.charAt(0) == '*' && p.charAt(p.length() - 1) == '*')
+        if (p.length() == 0) {
             return false;
-        boolean[] dp = new boolean[s.length() + 1];
-        dp[0] = true;
-        for (int j = 0; j < p.length(); j++) {
-            if (p.charAt(j) == '*') {
-                int i = 0;
-                while (i <= s.length() && !dp[i]) {
-                    i++;
+        }
+        boolean[][] dp = new boolean[p.length() + 1][s.length() + 1];
+        dp[0][0] = true;
+        for (int j = 0; j <= s.length(); j++) {
+            for (int i = 0; i <= p.length(); i++) {
+                if (dp[i][j]) {
+                    continue;
                 }
-                for (; i <= s.length(); i++) {
-                    dp[i] = true;
+                if (j == 0) {
+                    if (p.charAt(i-1) != '*') {
+                        dp[i][j] = false;
+                    } else {
+                        dp[i][j] = dp[i - 1][j];
+                    }
+                    continue;
                 }
-            } else {
-                for (int i = s.length() - 1; i >= 0; i--) {
-                    dp[i+1] = dp[i] && (p.charAt(j) == s.charAt(i) || p.charAt(j) == '?');
+                if (i == 0) {
+                    dp[i][j] = false;
+                    continue;
+                }
+                if (p.charAt(i-1) == '?') {
+                    dp[i][j] = dp[i-1][j-1];
+                } else if (p.charAt(i-1) == '*') {
+                    dp[i][j] = dp[i-1][j-1] || dp[i-1][j];
+                    
+                    for (int k = j + 1; k <= s.length(); k++) {
+                        dp[i][k] = dp[i][j];
+                    }
+                } else {
+                    if (s.charAt(j-1) == p.charAt(i-1)) {
+                        dp[i][j] = dp[i-1][j-1];
+                    } else {
+                        dp[i][j] = false;
+                    }
                 }
             }
-            dp[0] = dp[0] && p.charAt(j) == '*';
         }
-        return dp[s.length()];
+        return dp[p.length()][s.length()];
     }
 }
