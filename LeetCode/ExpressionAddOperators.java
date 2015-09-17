@@ -13,7 +13,9 @@ public class ExpressionAddOperators {
             return;
         }
         for (int i = index; i < num.length(); i++) {
-            if(i != index && num.charAt(index) == '0') break;
+            if (i != index && num.charAt(index) == '0') {
+                break;
+            }
             long cur = Long.parseLong(num.substring(index, i + 1));
             if (index == 0) {
                 helper(res, i + 1, target, num, path + cur, cur, cur);
