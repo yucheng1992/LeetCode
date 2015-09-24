@@ -27,4 +27,28 @@ public class MultiplyStrings {
         }
         return res.toString();
     }
+
+    public String multiply2(String num1, String num2) {
+        StringBuilder res = new StringBuilder();
+        int carry = 0;
+        int digit = num1.length() + num2.length() - 2;
+        while (digit >= 0) {
+            int cur = carry;
+            for (int i = 0, j = digit; i < num1.length() && j >= 0; i++, j--) {
+                if (j < num2.length()) {
+                    cur += (num1.charAt(i) - '0') * (num2.charAt(j) - '0');
+                }
+            }
+            res.append(cur % 10);
+            carry = cur / 10;
+            digit--;
+        }
+        if (carry > 0) {
+            res.append(carry);
+        }
+        while (res.charAt(res.length() - 1) == '0' && res.length() > 1) {
+            res.deleteCharAt(res.length() - 1);
+        }
+        return res.reverse().toString();
+    }
 }
