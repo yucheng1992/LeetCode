@@ -1,35 +1,29 @@
 public class AddBinary {
     public String addBinary(String a, String b) {
-        StringBuilder stra = new StringBuilder(a);
-        StringBuilder strb = new StringBuilder(b);
-        StringBuilder res = new StringBuilder();
-        int digit = 0;
+        if (a.length() == 0) {
+            return b;
+        }
+        if (b.length() == 0) {
+            return a;
+        }
+        if (a.length() < b.length()) {
+            return addBinary(b, a);
+        }
         int carry = 0;
-        while (!stra.toString().equals("") || !strb.toString().equals("")) {
-            if (!stra.toString().equals("") && !strb.toString().equals("")) {
-                digit = stra.charAt(stra.length()-1) - '0' + strb.charAt(strb.length()-1) - '0' + carry;
-                carry = digit / 2;
-                digit = digit % 2;
-                res.insert(0, digit);
-                stra.deleteCharAt(stra.length()-1);
-                strb.deleteCharAt(strb.length()-1);
-            } else if (!stra.toString().equals("")) {
-                digit = stra.charAt(stra.length()-1) - '0' + carry;
-                carry = digit / 2;
-                digit = digit % 2;
-                res.insert(0, digit);
-                stra.deleteCharAt(stra.length()-1);
-            } else {
-                digit = strb.charAt(strb.length()-1) - '0' + carry;
-                carry = digit / 2;
-                digit = digit % 2;
-                res.insert(0, digit);
-                strb.deleteCharAt(strb.length()-1);
-            }
+        StringBuilder res = new StringBuilder();
+        for (int i = b.length() - 1; i >= 0; i--) {
+            int cur = b.charAt(i) - '0' + a.charAt(i + a.length() - b.length()) - '0';
+            res.append((cur + carry) % 2);
+            carry = (cur + carry) / 2;
+        }
+        for (int i = a.length() - b.length() - 1; i >= 0; i--) {
+            int cur = a.charAt(i) - '0';
+            res.append((cur + carry) % 2);
+            carry = (cur + carry) / 2;
         }
         if (carry == 1) {
-            res.insert(0, 1);
+            res.append(1);
         }
-        return res.toString();
+        return res.reverse().toString();
     }
 }
