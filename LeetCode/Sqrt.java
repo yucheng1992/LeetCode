@@ -8,12 +8,10 @@ public class Sqrt {
                 return m;
             } else if (x / m > m) {
                 l = m + 1;
-                m = (l + r) / 2;
             } else {
                 r = m - 1;
-                m = (l + r) / 2;
             }
         }
-        return l-1;
+        return r;
     }
 }
