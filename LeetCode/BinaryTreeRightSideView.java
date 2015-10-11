@@ -13,28 +13,22 @@ public class Solution {
         if (root == null) {
             return res;
         }
-        Queue<TreeNode> queue = new LinkedList<TreeNode>();
-        queue.add(root);
-        int levelCount = 1;
-        while (!queue.isEmpty()) {
-            boolean flag = false;
-            int newLevelCount = 0;
-            for (int i = 0; i < levelCount; i++) {
-                TreeNode node = queue.poll();
-                if (!flag) {
+        Queue<TreeNode> cur = new LinkedList<TreeNode>();
+        cur.add(root);
+        while (!cur.isEmpty()) {
+            int size = cur.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode node = cur.poll();
+                if (i == size - 1) {
                     res.add(node.val);
-                    flag = true;
-                }
-                if (node.right != null) {
-                    queue.add(node.right);
-                    newLevelCount++;
                 }
                 if (node.left != null) {
-                    queue.add(node.left);
-                    newLevelCount++;
+                    cur.add(node.left);
+                }
+                if (node.right != null) {
+                    cur.add(node.right);
                 }
             }
-            levelCount = newLevelCount;
         }
         return res;
     }
