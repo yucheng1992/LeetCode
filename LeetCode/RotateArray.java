@@ -1,19 +1,18 @@
 public class RotateArray {
     public void rotate(int[] nums, int k) {
-        if (nums.length == 0 || nums == null) {
-            return;
-        }
-        int[] rotate;
-        int k_n = k % nums.length;
-        rotate = new int[k_n];
-        for (int i = nums.length - k_n; i < nums.length; i++) {
-            rotate[i - nums.length + k_n] = nums[i];
-        }
-        for (int i = nums.length - 1; i >= k_n; i--) {
-            nums[i] = nums[i - k_n];
-        }
-        for (int i = 0; i < k_n; i++) {
-            nums[i] = rotate[i];
+        k = k % nums.length;
+        swap(nums, 0, nums.length - 1);
+        swap(nums, 0, k - 1);
+        swap(nums, k, nums.length - 1);
+    }
+    
+    public void swap(int[] nums, int l, int r) {
+        while (l < r) {
+            int temp = nums[l];
+            nums[l] = nums[r];
+            nums[r] = temp;
+            l++;
+            r--;
         }
     }
 }
