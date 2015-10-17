@@ -1,16 +1,10 @@
 public class ReverseBits {
     // you need treat n as an unsigned value
     public int reverseBits(int n) {
-        long res = 0;
-        String cur = "";
-        int count = 1;
-        while (count <= 32) {
-            int last = n & 1;
-            cur += last;
-            n = n >> 1;
-            count++;
+        int res = 0;
+        for (int i = 0; i < 32; i++) {
+            res = res * 2 + ((n >> i) & 1);
         }
-        res = Long.parseLong(cur, 2);
-        return (int)res;
+        return res;
     }
 }
