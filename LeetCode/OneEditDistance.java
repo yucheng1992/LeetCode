@@ -1,24 +1,21 @@
 public class OneEditDistance {
     public boolean isOneEditDistance(String s, String t) {
-        if (s.length() - t.length() > 1 || t.length() - s.length() > 1) {
+        if (Math.abs(s.length() - t.length()) > 1) {
             return false;
         }
-        if (s.length() > t.length()) {
-            return isOneEditDistance(t, s);
-        } 
-        int i = 0;
-        while (i < s.length() && s.charAt(i) == t.charAt(i)) {
-            i++;
+        int i = 0, j = 0, error = 0;
+        while (i < s.length() && j < t.length()) {
+            if (s.charAt(i) != t.charAt(j)) {
+                error += 1;
+                if (s.length() > t.length()) {
+                    j -= 1;
+                } else if (s.length() < t.length()) {
+                    i -= 1;
+                } 
+            }
+            i += 1;
+            j += 1;
         }
-        if (i == s.length()) {
-            return t.length() - s.length() > 0;
-        }
-        if (s.length() == t.length()) {
-            i++;
-        }
-        while (i < s.length() && s.charAt(i) == t.charAt(i)) {
-            i++;
-        }
-        return i == s.length();
+        return error == 1 || error == 0 && s.length() != t.length();
     }
 }
