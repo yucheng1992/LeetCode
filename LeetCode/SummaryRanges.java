@@ -1,30 +1,26 @@
 public class SummaryRanges {
     public List<String> summaryRanges(int[] nums) {
         List<String> res = new LinkedList<String>();
-        if (nums == null || nums.length == 0) {
+        if (nums.length == 0) {
             return res;
         }
-        if (nums.length == 1) {
-            res.add(Integer.toString(nums[0]));
-            return res;
-        }
-        int left = 0;
-        while (left < nums.length) {
-            int right = left + 1;
-            boolean single = true;
-            StringBuilder cur = new StringBuilder();
-            cur.append(nums[left]);
-            while (right < nums.length && nums[right] - nums[right - 1] == 1) {
-                right += 1;
-                single = false;
+        int prev = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] == nums[i - 1] + 1) {
+                continue;
             }
-            if (!single) {
-                cur.append("->" + nums[right-1]);
-            }
-            res.add(cur.toString());
-            left = right;
-            right += 1;
+            res.add(range(prev, nums[i - 1]));
+            prev = nums[i];
         }
+        res.add(range(prev, nums[nums.length - 1]));
         return res;
+    }
+    
+    private String range(int start, int end) {
+        if (start == end) {
+            return String.valueOf(start);
+        } else {
+            return String.valueOf(start) + "->" + String.valueOf(end);
+        }
     }
 }
