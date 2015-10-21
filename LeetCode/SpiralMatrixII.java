@@ -1,28 +1,27 @@
 public class SpiralMatrixII {
     public int[][] generateMatrix(int n) {
         int[][] matrix = new int[n][n];
-        int left = 0, right = n - 1, top = 0, bottom = n - 1;
         int k = 1;
-        while (left < right && top < bottom) {
-            for (int j = left; j < right; j++) {
-                matrix[top][j] = k++;
+        for (int level = 0; level < n / 2; level++) {
+            for (int j = level; j < n - level - 1; j++) {
+                matrix[level][j] = k;
+                k++;
             }
-            for (int i = top; i < bottom; i++) {
-                matrix[i][right] = k++;
+            for (int i = level; i < n - level - 1; i++) {
+                matrix[i][n - level - 1] = k;
+                k++;
             }
-            for (int j = right; j > left; j--) {
-                matrix[bottom][j] = k++;
+            for (int j = n - level - 1; j > level; j--) {
+                matrix[n - level - 1][j] = k;
+                k++;
             }
-            for (int i = bottom; i > top; i--) {
-                matrix[i][left] = k++;
+            for (int i = n - level - 1; i > level; i--) {
+                matrix[i][level] = k;
+                k++;
             }
-            left++;
-            right--;
-            top++;
-            bottom--;
         }
-        if (n % 2 != 0) {
-            matrix[n/2][n/2] = n * n;
+        if (n % 2 == 1) {
+            matrix[n / 2][n / 2] = k;
         }
         return matrix;
     }
