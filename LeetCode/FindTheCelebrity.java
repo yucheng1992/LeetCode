@@ -3,21 +3,17 @@
 
 public class FindTheCelebrity extends Relation {
     public int findCelebrity(int n) {
+        int candidate = 0;
+        for (int i = 1; i < n; i++) {
+            if (knows(candidate, i)) {
+                candidate = i;
+            } 
+        }
         for (int i = 0; i < n; i++) {
-            boolean isCelebrity = true;
-            for (int j = 0; j < n; j++) {
-                if (i == j) {
-                    continue;
-                }
-                if (!knows(j, i) || knows(i, j)) {
-                    isCelebrity = false;
-                    break;
-                }
-            }
-            if (isCelebrity) {
-                return i;
+            if (i != candidate && (knows(candidate, i) || !knows(i, candidate))) {
+                return -1;
             }
         }
-        return -1;
+        return candidate;
     }
 }
