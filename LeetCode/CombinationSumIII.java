@@ -1,32 +1,22 @@
 public class CombinationSumIII {
-    List<List<Integer>> res = new ArrayList<List<Integer>>();
-    
     public List<List<Integer>> combinationSum3(int k, int n) {
-        List<Integer> cur = new ArrayList<Integer>();
-        dfs(1, k, n, cur);
+        List<List<Integer>> res = new LinkedList<List<Integer>>();
+        List<Integer> cur = new LinkedList<Integer>();
+        helper(res, cur, 0, 1, k, n);
         return res;
     }
     
-    public void dfs(int curNum, int k, int n, List<Integer> curList) {
-        if (curList.size() == k && sumOfList(curList) == n) {
-            res.add(new ArrayList<Integer>(curList));
+    private void helper(List<List<Integer>> res, List<Integer> cur, int curSum, int start, int k, int target) {
+        if (cur.size() == k) {
+            if (curSum == target) {
+                res.add(new LinkedList(cur));
+            }
             return;
-        } else if (curList.size() >= k || sumOfList(curList) > n) {
-            return;
         }
-        for (int i = curNum; i <= n && i <= 9; i++) {
-            List<Integer> path = new ArrayList<Integer>();
-            path.addAll(curList);
-            path.add(i);
-            dfs(i + 1, k, n, path);
+        for (int i = start; i <= 9; i++) {
+            cur.add(i);
+            helper(res, cur, curSum + i, i + 1, k, target);
+            cur.remove(cur.size() - 1);
         }
-    }
-    
-    public int sumOfList(List<Integer> cur) {
-        int sum = 0;
-        for (Integer i: cur) {
-            sum += i;
-        }
-        return sum;
     }
 }
