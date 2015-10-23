@@ -1,39 +1,25 @@
-import java.util.*;
-
 public class CombinationSum {
-    List<List<Integer>> res = new ArrayList<List<Integer>>();
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         Arrays.sort(candidates);
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
         List<Integer> cur = new ArrayList<Integer>();
-        dfs(cur, candidates, 0, target);
+        helper(res, cur, candidates, 0, target, 0);
         return res;
     }
     
-    public void dfs(List<Integer> cur, int[] candidates, int index, int target) {
-        //if sum of the cur list equals target, add it to the resuult and stop the dfs
-        if (sum(cur) == target) {
-            res.add(cur);
+    private void helper(List<List<Integer>> res, List<Integer> cur, int[] candidates, int curSum, int target, int index) {
+        if (curSum == target) {
+            res.add(new ArrayList<Integer>(cur));
             return;
         }
-        //if the sum is more than the target, stop the dfs
-        if (sum(cur) > target) {
+        if (curSum > target) {
             return;
         }
-        //the dfs process
         for (int i = index; i < candidates.length; i++) {
-            List<Integer> path = new ArrayList<Integer>();
-            path.addAll(cur);
-            path.add(candidates[i]);
-            dfs(path, candidates, i, target);
+            
+            cur.add(candidates[i]);
+            helper(res, cur, candidates, curSum + candidates[i], target, i);
+            cur.remove(cur.size() - 1);
         }
-    }
-    
-    public int sum(List<Integer> cur) {
-        //calculate the sum of the list
-        int sum = 0;
-        for (Integer item:cur) {
-            sum += item;
-        }
-        return sum;
     }
 }
