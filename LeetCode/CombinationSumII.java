@@ -1,43 +1,27 @@
 public class CombinationSumII {
-    List<List<Integer>> res = new ArrayList<List<Integer>>();
-    public List<List<Integer>> combinationSum2(int[] num, int target) {
-        Arrays.sort(num);
-        for (int i = 0; i < num.length; i++) {
-            //check duplicates
-            if (i != 0 && num[i] == num[i-1]) {
-                continue;
-            }
-            if (num[i] > target) {
-                break;
-            }
-            List<Integer> cur = new ArrayList<Integer>();
-            cur.add(num[i]);
-            int sum = num[i];
-            dfs(num, target, sum, i, cur);
-        }
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        Arrays.sort(candidates);
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+        List<Integer> cur = new ArrayList<Integer>();
+        helper(res, cur, candidates, 0, target, 0);
         return res;
     }
     
-    public void dfs(int[] num, int target, int sum, int index, List<Integer> cur) {
-        //use sum to store the current sum of cur
-        if (sum == target) {
-            res.add(cur);
+    private void helper(List<List<Integer>> res, List<Integer> cur, int[] candidates, int curSum, int target, int index) {
+        if (curSum == target) {
+            res.add(new ArrayList<Integer>(cur));
             return;
         }
-        if (sum > target) {
+        if (curSum > target) {
             return;
         }
-        //typical dfs
-        for (int i = index + 1; i < num.length; i++) {
-            //check whether there are duplicates
-            if (i-1 != index && num[i] == num[i-1]) {
+        for (int i = index; i < candidates.length; i++) {
+            if (i != index && i > 0 && candidates[i] == candidates[i - 1]) {
                 continue;
             }
-            List<Integer> path = new ArrayList<Integer>();
-            path.addAll(cur);
-            path.add(num[i]);
-            int newSum = sum + num[i];
-            dfs(num, target, newSum, i, path);
+            cur.add(candidates[i]);
+            helper(res, cur, candidates, curSum + candidates[i], target, i + 1);
+            cur.remove(cur.size() - 1);
         }
     }
 }
