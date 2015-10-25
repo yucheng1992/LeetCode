@@ -32,14 +32,12 @@ public class PalindromePermutationII {
                 }
             }
             Character[] symbol = candidate.toArray(new Character[candidate.size()]);
-            helper(res, "", symbol, 0, middle);
+            helper(res, "", symbol, middle, new boolean[symbol.length]);
         }
         return res;
     }
-    
-    public void helper(List<String> res, String cur, Character[] symbol, int level, char
-            middle) {
-        if (level >= symbol.length) {
+    public void helper(List<String> res, String cur, Character[] symbol, char middle, boolean[] visited) {
+        if (cur.length() == symbol.length) {
             if (middle == ' ') {
                 res.add(cur + new StringBuilder(cur).reverse().toString());
             } else {
@@ -47,24 +45,13 @@ public class PalindromePermutationII {
             }
             return;
         }
-        for (int i = level; i < symbol.length; i++) {
-            boolean duplicate = false;
-            for (int j = level; j < i; j++) {
-                if (symbol[j] == symbol[i]) {
-                    duplicate = true;
-                    break;
-                }
+        for (int i = 0; i < symbol.length; i++) {
+            if (visited[i] || i > 0 && visited[i - 1] && symbol[i] == symbol[i - 1]) {
+                continue;
             }
-            if (!duplicate) {
-                swap(symbol, i, level);
-                helper(res, cur + symbol[level], symbol, level + 1, middle);
-                swap(symbol, i, level);
-            }
+            visited[i] = true;
+            helper(res, cur + symbol[i], symbol, middle, visited);
+            visited[i] = false;
         }
-    }
-    public void swap(Character[] num, int i, int j) {
-        char temp = num[i];
-        num[i] = num[j];
-        num[j] = temp;
     }
 }
