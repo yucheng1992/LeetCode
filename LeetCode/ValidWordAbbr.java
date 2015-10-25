@@ -1,45 +1,37 @@
 public class ValidWordAbbr {
-    private Set<String> abbrev = new HashSet<String>();
-    private Map<String, Set<String>> str = new HashMap<String, Set<String>>();
+    private Map<String, Set<String>> map = new HashMap<String, Set<String>>();
     
     public ValidWordAbbr(String[] dictionary) {
-        for (int i = 0; i < dictionary.length; i++) {
-            if (dictionary[i].length() < 2) {
-                continue;
-            } else if (dictionary[i].length() == 2) {
-                abbrev.add(dictionary[i]);
-            } else {
-                String key = String.valueOf(dictionary[i].charAt(0)) + String.valueOf(dictionary[i].length() - 2) + String.valueOf(dictionary[i].charAt(dictionary[i].length() - 1));
-                abbrev.add(key);
-                if (str.containsKey(key)) {
-                    str.get(key).add(dictionary[i].substring(1, dictionary[i].length()));
-                } else {
-                    Set<String> set = new HashSet<String>();
-                    set.add(dictionary[i].substring(1, dictionary[i].length() - 1));
-                    str.put(key, set);
-                }
+        for (String word: dictionary) {
+            String abbr = getAbbr(word);
+            if (!map.containsKey(abbr)) {
+                map.put(abbr, new HashSet<String>());
             }
+            map.get(abbr).add(word);
         }
     }
 
     public boolean isUnique(String word) {
-        if (word.length() <= 2) {
+        String abbr = getAbbr(word);
+        if (!map.containsKey(abbr)) {
             return true;
         } else {
-            String key = String.valueOf(word.charAt(0)) + String.valueOf(word.length() - 2) + String.valueOf(word.charAt(word.length() - 1));
-            if (!abbrev.contains(key)) {
-                return true;
+            if (map.get(abbr).contains(word)) {
+                return map.get(abbr).size() == 1;
             } else {
-                if (str.containsKey(key) && str.get(key).size() == 1 && str.get(key).contains(word.substring(1, word.length() - 1))) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return false;
             }
         }
     }
+    
+    private String getAbbr(String word) {
+        if (word.length() <= 2) {
+            return word;
+        } else {
+            return String.valueOf(word.charAt(0)) + String.valueOf(word.length() - 2) + String.valueOf(word.charAt(word.length() - 1));
+        }
+    }
 }
-
 
 // Your ValidWordAbbr object will be instantiated and called as such:
 // ValidWordAbbr vwa = new ValidWordAbbr(dictionary);
