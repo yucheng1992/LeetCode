@@ -11,13 +11,13 @@ public class KthPermutation {
                 res.append("H");
                 continue;
             }
-            int num = permutationNum(x - 1, y);
-            if (k < num) {
+            int num1 = permutationNum(x - 1, y);
+            if (k < num1) {
                 res.append("H");
                 x -= 1;
             } else {
                 res.append("V");
-                k = k - num;
+                k = k - num1;
                 y -= 1;
             }
         }
