@@ -10,20 +10,20 @@ type TreeNode struct {
 
 func inorderTraversal(root *TreeNode) []int {
 	var nodes []int
-	helper(root, &nodes)
+	helperInorder(root, &nodes)
 	return nodes
 }
 
-func helper(root *TreeNode, nodes *[]int) {
+func helperInorder(root *TreeNode, nodes *[]int) {
 	if (root == nil) {
 		return
 	}
 	if (root.Left != nil) {
-		helper(root.Left, nodes);
+		helperInorder(root.Left, nodes);
 	}
 	*nodes = append(*nodes, root.Val)
 	if (root.Right != nil) {
-		helper(root.Right, nodes);
+		helperInorder(root.Right, nodes);
 	}
 }
 
