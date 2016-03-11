@@ -12,7 +12,7 @@ func maximum_depth(root *TreeNode) int {
 	if (root == nil) {
 		return 0
 	}
-	return max(maximum_depth(root.Left), maximum_depth(root.Right)) + 1;
+	return max(maximum_depth(root.Left), maximum_depth(root.Right)) + 1
 }
 
 func max(left int, right int) int {
